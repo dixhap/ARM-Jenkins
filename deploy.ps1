@@ -1,16 +1,23 @@
 try{
-
+write-Host 'Start'
     #$cred = Get-Credential   #Getting the credentials from pop-up
     #Login-AzureRmAccount -Credential $cred  # Loging to the Azure Subscription
+    $username = "HCLTECH\deeksha.p"
+write-Host $username
+    $password = "mini123#"
+write-Host 'Pwd'    
+$cred = new-object -typename System.Management.Automation.PSCredential `
+         -argumentlist $username, $password
     
-    
-    #$file = "Cloud_Foundation.xlsx"  
-    $TemplateFileLocation="Template.json" 
+    $file = "C:\Program Files (x86)\Jenkins\workspace\ARM\Cloud_Foundation.xlsx"
+    write-Host 'File Read'  
+    $TemplateFileLocation="https://storagecloudfoundation.blob.core.windows.net/cloudfoundation/" 
     $TemplateVNetFileName="azure_vnetdeploy.json"    
     $TemplateSubnetFileName="azure_subnetdeploy.json" 
     $TemplateVNetFile= $TemplateFileLocation + $TemplateVNetFileName
     $TemplateSubnetFile= $TemplateFileLocation + $TemplateSubnetFileName
-    $sheetName = "Vnet-Subnet"   
+    $sheetName = "Vnet-Subnet"
+    write-Host 'Excel'  
     $objExcel = New-Object -ComObject Excel.Application     
     $workbook = $objExcel.Workbooks.Open($file)             
     $sheet = $workbook.Worksheets.Item($sheetName)
@@ -78,6 +85,8 @@ try{
 }
     catch
     {
+        write-Host 'Error'
     $objExcel.Workbooks.Close() 
     Write-Output $_.Exception
     }
+
